@@ -8,7 +8,7 @@ const COLOMBIA_TIME_ZONE = "America/Bogota";
 
 // modificar horas en formato 24 horas
 const REPORT_HOUR = 12;
-const REPORT_MINUTE = 25;
+const REPORT_MINUTE = 29;
 
 let schedulerStarted = false;
 let lastRunDateOnly = null;
