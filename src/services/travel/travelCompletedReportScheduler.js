@@ -7,8 +7,8 @@ import { Op } from "sequelize";
 const COLOMBIA_TIME_ZONE = "America/Bogota";
 
 // modificar horas en formato 24 horas
-const REPORT_HOUR = 15;
-const REPORT_MINUTE = 12;
+const REPORT_HOUR = 18;
+const REPORT_MINUTE = 2;
 
 let schedulerStarted = false;
 let lastRunDateOnly = null;
