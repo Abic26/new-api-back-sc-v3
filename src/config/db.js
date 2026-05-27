@@ -4,6 +4,16 @@ import pg from "pg";
 
 dotenv.config();
 
+console.log(process.env.DB_USER)
+console.log(process.env.DB_PASSWORD)
+console.log(process.env.DB_HOST)
+console.log(process.env.DB_PORT)
+console.log(process.env.DB_DATABASE)
+console.log(process.env.DB_SSL)
+console.log(process.env.JWT_SECRET)
+
+
+
 const sequelize = new Sequelize(
   // para vercel
   process.env.DB_DATABASE,
