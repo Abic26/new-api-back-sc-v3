@@ -4,7 +4,7 @@ import { syncDatabase } from "./src/models/index.js";
 // import { initBotSocket } from "./src/services/botSocket.js";
 import { startWalletSiniestroAlertScheduler } from "./src/services/walletSiniestroAlertService.js";
 import { startWalletVencimientoAlertScheduler } from "./src/services/walletVencimientoAlertService.js";
-import { startTravelCompletedReportScheduler  } from "./src/services/travel/travelCompletedReportScheduler.js"
+// import { startTravelCompletedReportScheduler  } from "./src/services/travel/travelCompletedReportScheduler.js"
 const PORT = process.env.PORT || 4000;
 const isVercel = Boolean(process.env.VERCEL || process.env.VERCEL_ENV);
 
@@ -32,7 +32,7 @@ const start = async () => {
   // inicializacion para programar las tareas tanto envio de reporte cartera a johanna y a clientes
   startWalletSiniestroAlertScheduler();
   startWalletVencimientoAlertScheduler();
-  startTravelCompletedReportScheduler();
+  // startTravelCompletedReportScheduler();
 
 
   server.listen(PORT, () => {
