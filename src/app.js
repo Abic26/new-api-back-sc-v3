@@ -12,7 +12,7 @@ import dataRelevant from "../src/routes/clients/dataRelevant.routes.js";
 import travelRoutes from "../src/routes/travel/travelRoutes.js";
 import taskRoutes from "../src/routes/tasks/taskRoutes.js";
 
-import { startTravelCompletedReportScheduler  } from "./services/travel/travelCompletedReportScheduler.js"
+import { sendTodayCompletedTravelReports } from "./services/travel/travelCompletedReportScheduler.js";
 
 
 const app = express();
@@ -54,7 +54,7 @@ app.get("/api/cron/travel-report", async (req, res) => {
       });
     }
 
-    const result = await startTravelCompletedReportScheduler();
+    const result = await sendTodayCompletedTravelReports();
 
     return res.status(200).json({
       message: "Reporte de viajes ejecutado correctamente",

@@ -15,7 +15,7 @@
   "crons": [
     {
       "path": "/api/cron/travel-report",
-      "schedule": "33 14 * * *"
+      "schedule": "46 19 * * *"
     }
   ]
 }
