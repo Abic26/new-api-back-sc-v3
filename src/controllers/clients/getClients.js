@@ -105,45 +105,54 @@ export const getClientsWalletStatus = async (req, res) => {
   try {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const wantsPagination =
+      req.query.page !== undefined || req.query.limit !== undefined;
+    const where = buildClientFilters(req);
+    const include = [
+      {
+        model: Wallet,
+        as: "wallets",
+        attributes: [
+          "id",
+          "numeroFactura",
+          "fechaFactura",
+          "fechaVencimiento",
+          "fechaSiniestro",
+          "saldoReal",
+          "status",
+        ],
+      },
+    ];
 
     let clients;
+    let pagination = null;
 
-    if (req.user.role === "admin") {
-      clients = await Client.findAll({
-        include: [
-          {
-            model: Wallet,
-            as: "wallets",
-            attributes: [
-              "id",
-              "numeroFactura",
-              "fechaFactura",
-              "fechaVencimiento",
-              "fechaSiniestro",
-              "saldoReal",
-              "status",
-            ],
-          },
-        ],
+    if (wantsPagination) {
+      const page = parsePositiveInteger(req.query.page, 1, 100000);
+      const limit = parsePositiveInteger(req.query.limit, 20, 100);
+      const offset = (page - 1) * limit;
+
+      const { rows, count } = await Client.findAndCountAll({
+        where,
+        include,
+        order: [["nombre", "ASC"]],
+        limit,
+        offset,
+        distinct: true,
       });
+
+      clients = rows;
+      pagination = {
+        page,
+        limit,
+        total: count,
+        totalPages: Math.max(Math.ceil(count / limit), 1),
+      };
     } else {
       clients = await Client.findAll({
-        where: { userId: req.user.id },
-        include: [
-          {
-            model: Wallet,
-            as: "wallets",
-            attributes: [
-              "id",
-              "numeroFactura",
-              "fechaFactura",
-              "fechaVencimiento",
-              "fechaSiniestro",
-              "saldoReal",
-              "status",
-            ],
-          },
-        ],
+        where,
+        include,
+        order: [["nombre", "ASC"]],
       });
     }
 
@@ -211,6 +220,13 @@ export const getClientsWalletStatus = async (req, res) => {
         detalle,
       };
     });
+
+    if (wantsPagination) {
+      return res.json({
+        data: result,
+        pagination,
+      });
+    }
 
     res.json(result);
   } catch (error) {
