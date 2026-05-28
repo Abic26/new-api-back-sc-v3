@@ -2,6 +2,7 @@ import express from "express";
 import { authMiddleware } from "../../middleware/authMiddleware.js";
 import {
   addRouteStop,
+  appendRouteGpsPoints,
   createRoute,
   createVisit,
   getMyRoutes,
@@ -22,6 +23,7 @@ router.get("/routes/today", authMiddleware, getTodayRoute);
 router.get("/routes/:id", authMiddleware, getRouteById);
 router.post("/routes", authMiddleware, createRoute);
 router.patch("/routes/:id", authMiddleware, updateRoute);
+router.post("/routes/:id/gps-points", authMiddleware, appendRouteGpsPoints);
 router.post("/routes/:id/match-track", authMiddleware, matchRouteTrack);
 
 router.post("/routes/:routeId/stops", authMiddleware, addRouteStop);

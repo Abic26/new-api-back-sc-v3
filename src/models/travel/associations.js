@@ -4,6 +4,7 @@ import { Route } from "./route.js";
 import { RouteStop } from "./routeStop.js";
 import { Visit } from "./visit.js";
 import { TravelTrackMatch } from "./travelTrackMatch.js";
+import { RouteGpsPoint } from "./routeGpsPoint.js";
 
 User.hasMany(Route, {
   foreignKey: "advisorId",
@@ -65,4 +66,14 @@ TravelTrackMatch.belongsTo(Visit, {
   as: "visit",
 });
 
-export { Route, RouteStop, Visit, TravelTrackMatch };
+Route.hasMany(RouteGpsPoint, {
+  foreignKey: "routeId",
+  as: "gpsPoints",
+});
+
+RouteGpsPoint.belongsTo(Route, {
+  foreignKey: "routeId",
+  as: "route",
+});
+
+export { Route, RouteStop, Visit, TravelTrackMatch, RouteGpsPoint };
